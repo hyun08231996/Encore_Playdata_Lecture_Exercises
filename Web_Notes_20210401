@@ -1,0 +1,105 @@
+1. WAS가 서비스를 진행하는 절차
+
+    —> IDE Tool인 이클립스가 자동으로 서비스를 하기 때문에 그 안에서 진행되는 절차를 모르고 지나간다.
+
+2. 정적인 문서와 동적인 문서 정리 | Static Document (HTML, CSS (screen, image)) and Dynamic Document (Program)
+
+    —> 웹 서버와 컨테이너의 차이점—> 웹 서버와 컨테이너의 차이점
+
+3. Servlet API 설명
+
+
+웹서버가 하는일
+
+1. 브라우저에서 들어오는 모든 요청을 받는다.
+2. 해당하는 요청이 정적 / 동적인 요청 인지를 판단
+    - 정적인 요청 → 직접 응답
+    - 동적인 요청 → 요청을 Container로 내린다.
+3. WEB-INF 폴더 기준으로, 밖에 있는것은 static document (web server), 안에 있는것은 dynamic document(프로그램) (container)
+
+Client의 요청 방식
+
+- Get → "Get it" 기본방식 (Page 연결해줘)
+    1. Data 전달이 목적이 아님.
+    2. Page 연결이 목적.
+    3. request 객체에 Data가 안 담긴다.
+    4. Get 방식일때 Data 전송 방식 → map 방식으로 전달:
+
+        <a href="AServlet">여기에
+
+        <a href="Aservlet?id=________&pass=_________>여기에
+
+    5. 주소창에 값이 노출되어져 서버에 전송 → 보안상 우려... Data크기나 갯수에 제한 있음
+- Post → Post Office 같이 역할
+    1. Data 전송이 목적 → 전송 할 데이터가 많을 때 사용한다. 
+
+        "이러이러한 Data를 서버로 보내니. 서버야 니가 이러이러한 Data를 받아서 잘 처리하고, 그 결과를 나한테 돌려줘."
+
+    2. Map 방식으로 담겨져서 보내진다. → 객체에 담겨져서 전송되기 때문에 보안상 노출되면 안되는 Data는 Post방식을 사용한다.
+    3. Data크기나 갯수에 제한 없음
+
+    *do***Get()과 doPost()는 동시에 요청을 처리할 수 없다.****
+
+Life cycle of Servlet
+
+WAS에서...
+
+1. DD파일을 읽어들인다.
+2. Servlet Instance생성 — 기본 생성자 호출
+3. init() calling
+
+    —> 1~3번 까지 Ready On 상태, 단 한번만 진행됨
+
+Client가 요청하면은...
+
+ 4. service() Calling —- 3번 Calling
+
+doGet() | doPost() Calling
+
+ 5. Request, Response 가 생성 —- passing into
+
+ 6. Client의 요청을 처리 —- () {}
+
+ 7. Thread, Request, Response → death —- Memory Unbound
+
+—> 4~7 까지 client가 요청할 때마다 repeat
+
+ServletConfig — WAS와 연관된 객체
+
+- 외부로부터 값을 받아와서 servlet을 초기화 시키는 객체
+1. 컨테이너 차원에서 설정한 정보를 받아와서 서블릿을 초기화 시키는 객체
+2. 1번의 기능을 라이프 사이클 메소드 중에서 init() 수행하는 것이 가장 적합.
+- getInitParameter("<param_name>에 등록된 값")
+- getInitParameterNames()
+- getServletContext()
+
+ServletContext — 
+
+1. DD (web.xml) 파일을 읽는다.
+2. Context 생성
+3. Servlet 생성 → 기본 생성자 호출
+4. ServletConfig 생성
+5. init() calling ... servletconfig가 passing into
+
+    —>1~5 까지 Ready On 상태, <load on- startup> 태그를 달아야한다
+
+6. Request, response, thread 객체 생성
+7. service() calling... request, response 가 service 안에 passing into
+8. 응답 service() 수행 → thread, request, response death
+9. destroy() calling
+10. Everything death
+
+    —>6~10까지 repeat
+
+- ServletConfig → A Servlet Initialization, servlet 마다마다
+- ServletContext → Global Initialization, 전체적으로
+
+Listener(감시자/감지자) + Event(사건의 발생)
+
+- ServletContext는 servlet차원을 넘어서 global 하기 때문에 init()보다 훨씬 이전에 listener를 통해 실행된다.
+
+JSP
+
+- <%   Java Code   %>
+- <%=    출력문     %>
+- jsp는 정적인 문서가 아니라 동적인 문서이다. Servlet과 같다.
