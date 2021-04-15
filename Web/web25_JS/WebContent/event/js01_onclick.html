@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	/* 선언적 함수 선언하기 */
+	function showData() {
+		//닉네임으로 입력한 값을 하나의 변수에 할당...
+		var nickName = document.loginForm.nick.value;
+		alert(nickName+" Hello");
+		document.loginForm.nick.value = "";
+		document.loginForm.hobby.focus();
+	}
+	function showHobby() {
+		var hobby = document.loginForm.hobby.value;
+		alert(hobby+" Hello");
+		document.loginForm.hobby.value = "";
+	}
+</script>
+</head>
+<body>
+	<form name="loginForm">
+		닉네임 <input type="text" name="nick">
+		<input type="button" value="닉네임보기" onclick="showData()"><br/><br/>
+		취 미 <input type="text" name="hobby">
+		<input type="button" value="취미보기" onclick="showHobby()">
+	</form>
+</body>
+</html>
