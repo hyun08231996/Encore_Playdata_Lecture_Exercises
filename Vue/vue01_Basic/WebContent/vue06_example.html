@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>v-bind :: example 직접 풀어보기</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+	$(function(){
+		var model={
+			name:'Cake',
+			image:'cake.jpg',
+			price:30000,
+			width:80
+		}
+		var app = new Vue({
+			el:'#app',
+			data:model
+		});
+		
+	});
+</script>
+</head>
+<body>
+	<div id="app">
+		<table border="2">
+			<caption>내가 가장 좋아하는 FOOD</caption>
+			<thead>
+				<tr>
+					<th>FOOD</th><th>IMAGE</th><th>PRICE</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{name}}</td><td><img :src="image" :width="width"></td><td>{{price}}원</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

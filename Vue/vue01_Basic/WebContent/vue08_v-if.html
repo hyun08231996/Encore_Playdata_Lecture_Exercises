@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>v-if | v-show</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="app">
+	<!-- 조건부 랜더링. -->
+	<!-- v-if는 조건이 맞지 않으면 랜더링 조차 시도하지 않는다. 주석처리 한다. -->
+	<h1 v-if="show">나는 보입니다.
+		<input type="text" name="text1" ><br>
+		<input type="text" name="text1" ><br>
+	</h1>
+	
+	<!-- v-show는 조건이 맞지 않으면 일단 랜더링은 진행한다. css 기법 display:none. -->
+	<h1 v-show="show">나는 보입니다.
+		<input type="text" name="text1" ><br>
+		<input type="text" name="text1" ><br>
+	</h1>
+</div>
+</body>
+<script>
+	var app = new Vue({
+		el:'#app',
+		data:{
+			show:false
+		}
+	});
+</script>
+</html>

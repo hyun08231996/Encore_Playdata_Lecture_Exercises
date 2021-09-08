@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>v-for</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="app">
+	<ul>
+		<!-- li태그가 여러번 반복되도록 작성 :: v-for -->
+		<li v-for="n in numbers">{{n}}</li>
+	</ul>
+	
+	<!-- people에 등록된 장군들의 이름과 나이를 아래부분에 출력 
+		 1) 테이블 형식으로 출력
+		 2) 단 40세 이상의 장군 정보만 출력되도록 화면을 작성
+	-->
+	<table border="2">
+		<tr>
+			<th>이 름</th><th>나 이</th>
+		</tr>
+		<tr v-for="p in people" v-if="p.age>=40">
+			<td>{{p.name}}</td>
+			<td>{{p.age}}</td>
+		</tr>
+	</table>
+</div>
+</body>
+<script>
+	var app = new Vue({
+		el:'#app',
+		data:{
+			numbers : [1,2,3,4,5,6,7],
+			people : [
+				{
+					name:'이순신',
+					age:50
+				},
+				{
+					name:'아이유',
+					age:29
+				},
+				{
+					name:'혜리',
+					age:28
+				},
+				{
+					name:'강호동',
+					age:49
+				}
+			]
+		}
+	});
+</script>
+</html>

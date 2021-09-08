@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+	<div id="first">
+		<!-- 1. Mustache Expression -->
+		<div>{{title}}</div>
+		
+		<!-- 2. 디렉티브 -->
+		<!-- text는 JQuery의 text() 함수와 동일
+			 html은 JQuery의 html() 함수와 동일
+		 -->
+		<div v-text="title"></div>
+		<div v-html="title"></div>
+	</div>
+</body>
+
+<script>
+	var model = {title:'<h2>Encore Vue Test</h2>'}
+	var app = new Vue({
+		el : "#first",
+		data : model
+	});
+</script>
+</html>
