@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
+
+
+ <configuration>
+ <settings>
+	<!-- <setting name="jdbcTypeForNull" value="NULL"/>-->
+	<setting name="mapUnderscoreToCamelCase" value="true"/>
+</settings>
+ 
+ <!-- 2. 디비정보를 인스턴스시키는 객체...vo 연결 -->
+ <typeAliases>
+ 	<package name="com.encore.services.domain"/>
+ </typeAliases>
+ 
+ <!-- 3. JDBC 환경구축 -->
+ <!-- <environments default="development">
+ 	<environment id="development"> default와 id는 반드시 같아야 한다. 
+ 		<transactionManager type="JDBC"/>
+		<dataSource type="UNPOOLED">
+			<property name="driver" value="${jdbc.mysql.driver}"/>
+			<property name="url" value="${jdbc.mysql.url}"/>
+			<property name="username" value="${jdbc.mysql.username}"/>
+			<property name="password" value="${jdbc.mysql.password}"/>
+		</dataSource>
+ 	</environment>
+ </environments> -->
+ 
+ <mappers>
+ 	<mapper resource="mapper/book_mapping.xml"/>
+ </mappers>
+ </configuration>

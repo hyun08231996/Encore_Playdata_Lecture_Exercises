@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+<mapper namespace="bookMapper">
+	
+	<sql id="orderby-isbn-desc">
+		ORDER BY isbn DESC
+	</sql>
+	<sql id="bookList">
+		SELECT 
+			isbn, title, catalogue, nation, publish_date, publisher, author, price, currency, description
+			FROM book
+	</sql>
+	
+	<select id="bookOne" resultType="book">
+		SELECT
+			isbn, title, catalogue, nation, publish_date, publisher, author, price, currency, description
+			FROM book
+			WHERE isbn = #{isbn}
+	</select>
+	
+	<!-- INSERT -->
+	<insert id="bookAdd" parameterType="book">
+		INSERT
+		INTO book (isbn, title, catalogue, nation, publish_date, publisher, author, price, currency, description) 
+		VALUES (#{isbn}, #{title}, #{catalogue}, #{nation}, #{publishDate}, #{publisher}, #{author}, #{price}, #{currency}, #{description})
+	</insert>
+	
+	<!-- U -->
+	<update id="bookUpdate" parameterType="book">
+		UPDATE book
+			SET
+			title = #{title}, 
+	        catalogue = #{catalogue}, 
+	        nation = #{nation}, 
+	        publish_date = #{publishDate}, 
+	        publisher = #{publisher}, 
+	        author = #{author}, 
+	        price = #{price}, 
+	        currency = #{currency}, 
+	        description = #{description} 
+			WHERE isbn = #{isbn}
+	</update>
+	<!-- D -->
+	<delete id="bookDelete" parameterType="string">
+		DELETE from book where isbn = #{VALUE}
+	</delete>
+	
+	
+	<!-- 정적쿼리 -->
+	<select id="getBook" resultType="book" parameterType="book"> 
+		<include refid="bookList" />
+		WHERE isbn=#{isbn}
+	</select>
+	
+	
+	<!-- <select id="getBookAuthor" resultMap="bookSelectRM" parameterType="String"> 
+		<include refid="bookList" />
+		WHERE author=#{VALUE}
+	</select>
+	
+	<select id="getBookPublisher" resultMap="bookSelectRM" parameterType="String"> 
+		<include refid="bookList" />
+		WHERE publisher=#{VALUE}
+	</select> -->
+	
+	
+	<!-- 가격 검색 파라미터보다 작은 가격의 책 -->
+	<!-- <select id="priceList" resultMap="bookSelectRM" parameterType="int"> 
+		<include refid="bookList" />
+		WHERE price <![CDATA[<]]> #{VALUE}
+	</select> -->
+	<!-- 가격 검색 파라미터보다 큰 가격의 책 -->
+	<!-- <select id="priceList2" resultMap="bookSelectRM" parameterType="int"> 
+		<include refid="bookList" />
+		WHERE price <![CDATA[>]]> #{VALUE}
+	</select> -->
+	
+	
+	
+	<!-- 동적쿼리 -->
+	<select id="getBookList" parameterType="book" resultType="book">
+		<include refid="bookList" />
+		<where>
+			<if test="title !=null">
+				title LIKE #{title}
+			</if>
+			<if test="author !=null">
+				OR author LIKE #{author}
+			</if>
+		</where>
+		<include refid="orderby-isbn-desc" />		
+	</select>
+	
+	
+	
+</mapper> 
