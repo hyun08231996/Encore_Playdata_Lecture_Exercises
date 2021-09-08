@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(function () {
+    	$('img').addClass('star');
+    	
+    	//1. append 함수를 이용해서 3초뒤에 맨 첫번째 이미지가 맨 뒤로 가도록
+    	// setTimeout 특정한 시각 뒤에 단 한번만 호출....
+    	/*setTimeout(function(){
+    		//$('body').append($('img:first'));
+    		$('body').append($('img:eq(0)'));
+    	}, 3000);*/
+    	
+    	//2. 특정한 시각을 간격으로 계속 호출되는 함수는 setInterval()
+    	setInterval(function(){
+    		$('img:eq(0)').appendTo('body');
+    	}, 1000);
+	});
+</script>
+<style>
+	.star{border:2px solid black; width: 200px; height: 240px;}
+</style>
+</head>
+<body>
+<img alt="" src="../image/1.jpg">
+<img alt="" src="../image/2.jpg">
+<img alt="" src="../image/3.jpg">
+<img alt="" src="../image/4.jpg">
+</body>
+</html>
