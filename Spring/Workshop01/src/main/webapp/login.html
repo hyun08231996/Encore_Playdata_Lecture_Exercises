@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+img{
+	float:left;
+	width: 50%;
+	height: 100vh;
+}
+#wrap{ 
+	width: 50%;
+	float:right;
+	text-align: center;
+	margin-top:200px;
+}
+form {
+    width: 400px;
+    margin: 0 auto;
+}
+p {
+	margin-bottom: 20px;
+}
+input[type=text]{
+    margin-left: 70px;
+    float: right;
+    width: 280px;
+    padding: 3px;
+}
+input[type=password] {
+    margin-top:20;
+    float: right;
+    width: 280px;
+    padding: 3px;
+}
+input[type=submit]{
+	background-color: blue;
+	margin-top: 20px;
+	width: 100%;
+	border: none;
+	color: white;
+	padding: 15px;
+}
+</style>
+</head>
+<body>
+<img src="img/book_login.jpg">
+<div id="wrap">
+	<form action="login.do" method="post">
+	<input type="hidden" name="command" value="login">
+		<h2>로그인하여 주세요</h2><br><br>
+		<p><span>ID</span><input type="text" name="id" required="required"></p>
+		<p><span>PASSWORD</span><input type="password" name="password" required="required"></p>
+		<input type="submit" value="LOGIN">
+	</form>
+</div>
+
+</body>
+</html>

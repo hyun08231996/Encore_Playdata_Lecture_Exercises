@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="BookMapper">
+	
+	<sql id="select-book">
+		SELECT
+		isbn,title,catalogue,nation,publish_date,publisher,author,price,currency,description
+		FROM book
+	</sql>
+
+	<insert id="addBook" parameterType="book">
+		INSERT 
+		INTO book 
+		(isbn,title,catalogue,nation,publish_date,publisher,author,price,currency,description) 
+		VALUES(#{isbn},#{title},#{catalogue},#{nation},#{publishDate},#{publisher},#{author},#{price},#{currency},#{description})
+	</insert>
+	
+	<select id="getBookList" resultType="book">
+		<include refid="select-book"/>
+	</select>
+	
+	<select id="getBook" parameterType="string" resultType="book">
+		<include refid="select-book"/>
+		WHERE isbn = #{VALUE}
+	</select>
+	
+	<select id="getBooksByTitle" parameterType="string" resultType="book">
+		<include refid="select-book"/>
+		WHERE title LIKE '%${value}%'
+	</select>
+	
+	<select id="getBooksByAuthor" parameterType="string" resultType="book">
+		<include refid="select-book"/>
+		WHERE author LIKE '%${value}%'
+	</select>
+	
+	<select id="getBooksByCatalogue" parameterType="string" resultType="book">
+		<include refid="select-book"/>
+		WHERE catalogue LIKE '%${value}%'
+	</select>
+
+</mapper>
