@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+thead{
+	background-color:blue;
+	color:white;
+}
+table,tr,th,td{
+	border:1px solid black;
+	border-collapse:collapse;
+	text-align:center;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#index').on('click',"#showAll", function(){
+			var id = [];
+			var name = [];
+			var dept = [];
+			var title = [];
+			var sal = [];
+			
+			$.ajax({
+				url:'api/findAllEmployees',
+				type:'get',
+				contentType:"application/json;charset=utf-8",
+				
+				error:function(xhr, status, message){
+					alert("error : "+message);
+				},
+				
+				success:function(data){
+					//alert(data);
+					$.each(data, function(idx, emp) {
+						id.push(emp.id);
+						name.push(emp.name);
+						dept.push(emp.dept_name);
+						title.push(emp.title);
+						sal.push(emp.salary);
+					});
+					//alert(sal);
+					
+					var emps = [];
+					for(var i=0;i<id.length;i++){
+						emps.push({
+							id:id[i],
+							name:name[i],
+							dept:dept[i],
+							title:title[i],
+							sal:sal[i]
+						});
+					}
+					
+					var model = {
+						emps : emps
+					};
+					
+					var app = new Vue({
+						el:'#app',
+						data:model,
+						filters:{
+							toFloat(value){
+								return value.toFixed(2);
+							}
+						}
+					});
+				}
+				
+			});
+		});
+		
+		
+	});
+</script>
+</head>
+<body>
+<h1 style="color:blue;text-align:center;">ENCORE HRM LIST</h1>
+<hr>
+<div align="center" id='index'>
+	<a href="#">사원추가</a>&nbsp;|&nbsp;
+	<a href="#">이름으로 찾기</a>&nbsp;|&nbsp;
+	<a href="#">아이디로 찾기</a>&nbsp;|&nbsp;
+	<a href="#" id="showAll">모든사원 보기</a>
+</div>
+<hr>
+<div id="app">
+	<table width="100%">
+		<thead>
+			<tr>
+				<th>사원 아이디</th><th>사원명</th><th>부서</th><th>직책</th><th>연봉</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr v-for="e in emps">
+				<td>{{e.id}}</td><td>{{e.name}}</td><td>{{e.dept}}</td><td>{{e.title}}</td><td>{{e.sal | toFloat}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</body>
+</html>
