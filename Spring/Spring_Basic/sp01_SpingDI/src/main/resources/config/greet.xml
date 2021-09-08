@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+												 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<!-- greet1이라는 이름으로 Greet 객체가 생성되도록 빈을 작성 -->
+	<!-- Greet 객체를 생성1 :: 값주입 없음 -->
+	<bean id="greet1" class="spring.service.hello.Greet"/>
+	
+	<!--  Greet 객체를 생성2 :: 값주입 생성자주입 | setter 주입 :: 생성자 주입 -->
+	<bean id="greet2" class="spring.service.hello.Greet">
+		<constructor-arg value="Hello Spring!!"/> 
+	</bean>
+	
+	<!--  Greet 객체를 생성3 :: 값주입 생성자주입 | setter 주입 :: setter 값 주입 -->
+	<bean id="greet3" class="spring.service.hello.Greet">
+		<property name="message" value="Hello Spring!!!~~~~~"/> <!-- property는 set method와 같다. -> setMessage에서 message만 name에 넣어준다 -->
+	
+	</bean>
+	
+	<!--  Greet 객체를 생성4 :: 값주입 생성자주입 | setter 주입 :: 생성자, setter 전부 다 사용 주입 -->
+	<bean id="greet4" class="spring.service.hello.Greet">
+		<constructor-arg value="안녕 생성자 주입 1"/>
+		<property name="message" value="안녕 setter 주입 2"/>
+	
+	</bean>
+	
+	<!-- Bean 정의하기 :: API(라이브러리) Bean | User Definition Bean(내가 만든 빈) -->
+	<!-- API(라이브러리) Bean | 생성자 값 주입 -->
+	<bean id="str" class="java.lang.String">
+		<constructor-arg value="스프링 빈 설정문서 만들기"/>
+	</bean>
+	
+	<bean id="greet5" class="spring.service.hello.Greet">
+		<constructor-arg ref="str"/>
+	</bean>
+	
+	<!-- 
+	1. str1이라는 이름으로 API빈(java.lang.String)을 생성...값은 생성자 주입으로 알아서 넣어줍니다.(Hello Encore)
+	2. greet6라는 이름으로 Greet 객체를 생성
+	3. greet6 빈의 값의 주입은 setter로 하고 str1의 값이 주입되도록 합니다.
+	4. Test에서 직접 확인하기
+	 -->
+	<bean id="str1" class="java.lang.String">
+		<constructor-arg value="Hello Encore"/>
+	</bean>
+	
+	<bean id="greet6" class="spring.service.hello.Greet">
+		<constructor-arg ref="str1"/>
+	</bean> 
+	 
+</beans>
