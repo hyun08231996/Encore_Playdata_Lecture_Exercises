@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+body{
+	width:70%;
+	margin-left:15%;
+	background-color: #ffffff;
+}
+thead{
+	background-color: #3c99dc;
+	color:white;
+	height:50px;
+}
+table,tr,th,td{
+	border:1px solid lightgray;
+	border-collapse:collapse;
+	text-align:center;
+}
+th{
+	padding-left:30px;
+	padding-right:30px;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- Vue Axios cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+</head>
+<body>
+<h1 style="color:blue;text-align:center;">ENCORE HRM LIST</h1>
+<hr>
+<div id="app">
+	<section v-if="errored">
+		<p>Error In Axios Transport...</p>
+	</section>
+	<section v-else>
+	
+	<div align="center" id='index'>
+		<a href="#">사원추가</a>&nbsp;|&nbsp;
+		<a href="#">이름으로 찾기</a>&nbsp;|&nbsp;
+		<a href="#">아이디로 찾기</a>&nbsp;|&nbsp;
+		<a href="#" id="showAll">모든사원 보기</a>
+	</div>
+	<hr>
+	<div v-if="loading">Loading.....</div>
+	<table align="center">
+		<thead>
+			<tr>
+				<th>사원 아이디</th><th>사원명</th><th>부서</th><th>직책</th><th>연봉</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr v-for="e in emps">
+				<td>{{e.id}}</td><td>{{e.name}}</td><td>{{e.dept_name}}</td><td>{{e.title}}</td><td>{{e.salary | toFloat}}</td>
+			</tr>
+		</tbody>
+	</table>
+	</section>
+</div>
+
+<script>
+new Vue({
+	el:'#app',
+	//data:{} 정적인 데이터를 바인딩 할때 사용하는 기법
+	//data(){} 동적인, 반응형 데이터를 바인딩 할 때 사용하는 기법
+	data(){
+		return{
+			emps:null,
+			errored:false,
+			loading:true
+		}
+	},
+	filters:{
+		toFloat(value){
+			return value.toFixed(2);
+		}
+	},
+	//axios기술....mounted() 에서 해줘야 한다..
+	mounted(){
+		axios
+			.get('http://127.0.0.1:7788/api/findAllEmployees')
+			.then(response=>(this.emps=response.data))
+			.catch(error=>{
+				console.log(error);
+				this.errored = true; //여기서 error값 변경
+			})
+			.finally(()=>this.loading = false) //여기서 loading이 끝났을을 알려준다.
+	}
+})
+</script>
+</body>
+</html>

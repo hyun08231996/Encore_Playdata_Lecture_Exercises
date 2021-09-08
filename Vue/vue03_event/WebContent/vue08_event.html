@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<!-- 
+이벤트
+1)클릭이벤트
+2)키 이벤트
+ -->
+<div id="app">
+	<form action="vue07_event_target.html" @submit.prevent="dataCheck">
+	아이디 : 
+	<input type="text" placeholder="아이디 입력..." v-model="id" id="id">
+	<input type="text" placeholder="아이디 입력..." v-model="id" @keyup.enter="sendId">
+	<input type="text" placeholder="아이디 입력..." v-model="id" @keyup.13="submit"><!-- Enter치면 Submit 이벤트 호출 -->
+	<button @click="sendId">결과보기</button>
+	</form>
+</div>
+<script>
+	new Vue({
+		el:'#app',
+		data:{
+			id:""
+		},
+		methods:{
+			sendId(){
+				alert(this.id);
+			},
+			dataCheck(){
+				alert(document.getElementById("id").getAttribute("placeholder"));
+			}
+		}
+	})
+</script>
+</body>
+</html>

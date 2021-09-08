@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<input type="text" id="aa" :value="hint"><br><br>
+	<img :src="imagepath" width="300px" height="300px">
+</div>
+<script>
+	var model = {
+			imagepath:"./image/gore.png",
+			hint:"고래이미지"
+	}
+	new Vue({
+		el:'#app',
+		data:model
+	});
+</script>
+</body>
+</html>

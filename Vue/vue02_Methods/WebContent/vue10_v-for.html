@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<h2>v-for와 함께 v-if이용하기</h2>
+<div id="app">
+	<h2>객체 배열 - 번호, 내용 출력</h2>
+	<label>ENCORE 각 지구별로 개설된 클래스 갯수</label>
+	<input type="number" v-model.number="count">
+	<ul>
+		<li v-for="encore,index in encores" v-if="encore.count===count">
+			{{index+1}}. {{encore.name}}, {{encore.count}}개 클래스
+		</li>
+	</ul>
+</div>
+
+<script>
+	new Vue({
+		el:'#app',
+		data:{
+			encores:[
+				{name:'영등포구', count:3},
+				{name:'남부지구', count:5},
+				{name:'서초지구', count:7}
+			],
+			count:0
+		}
+	});
+</script>
+</body>
+</html>

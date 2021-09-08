@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="./table.css" />
+    <title>ENCORE HRM</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <div id='app'>
+        <div class='headtitle'>
+            <h2>ENCORE HRM LIST</h2>
+        </div>
+        <div class='search_box'>
+            <a href='./index04.html'>사원추가</a> |
+            <a href='./index03.html'>이름으로 찾기</a> |
+            <a href='./index02.html'>아이디로 찾기</a> |
+            <a href='./index01.html'>모든사원 보기</a>
+        </div>     
+        
+        <table class='list_table'>
+            <col width="25%">
+            <col width="75%">
+ 
+            <tr><th>이름</th><td style="text-align:left;"><input type="text" name="name" v-model="name"></td></tr>
+            <tr><th>이메일</th><td style="text-align:left;"><input type="text" name="email" v-model="mailid"></td></tr>
+            <tr><th>고용일</th><td style="text-align:left;"><input type="date" name="date" v-model="start_date"></td></tr>
+            <tr><th>관리자</th><td style="text-align:left;">
+            	<select name="manager" v-model="manager_id">
+            		<option v-for="emp in info" :value="emp.id">
+            			{{emp.id}} : {{emp.name}}
+            		</option>
+            	</select></td></tr>
+            <tr><th>직책</th><td style="text-align:left;">
+            	<select name="title" v-model="title">
+            		<option v-for="title in titleList" :value="title">
+            			{{title}}
+            		</option>
+            	</select></td></tr>
+            <tr><th>부서</th><td style="text-align:left;">
+            	<select name="department" v-model="dept_id">
+            		<option v-for="dept in deptList" :value="dept">
+            			{{dept}}
+            		</option>
+            	</select></td></tr>
+            <tr><th>월급</th><td style="text-align:left;"><input type="number" name="salary" value="0" v-model="salary"></td></tr>
+            <tr><th>커미션</th><td style="text-align:left;"><input type="number" name="commission" value="0" v-model="commission_pct"></td></tr>
+                
+        </table><br>
+        
+        <div align="center"><button @click="addEmployee">사원추가</button></div>
+    </div>
+    <script>
+        new Vue({
+            el: "#app",           
+            data(){
+                return {
+                    info:[ ],
+                    titleList:[ ],
+                    deptList:[ ],
+                    loading:true,
+                    errored:false,
+                    name:'',
+                    mailid:'',
+                    start_date:'',
+                    manager_id:0,
+                    title:'',
+                    dept_id:0,
+                    salary:0.0,
+                    commission_pct:0.0
+                    
+                }
+            },
+            filters:{
+                salarydecimal(value){
+                    return value.toFixed(2);
+                }
+            },
+            mounted(){
+                
+                axios.all([axios.get('http://127.0.0.1:7788/api/findAllEmployees'),
+                    axios.get('http://127.0.0.1:7788/api/findAllTitles'),
+                    axios.get('http://127.0.0.1:7788/api/findAllDepartments')])
+	            .then(axios.spread((firstResponse, secondResponse, thirdResponse) => {  
+	                (this.info=firstResponse.data,this.titleList=secondResponse.data,
+	                		this.deptList=thirdResponse.data);
+	            }))
+	            .catch(error=>{
+                    console.log(error);
+                    this.errored = true
+                })
+                .finally(()=>this.loading = false)
+            },
+            methods:{
+            	addEmployee(){
+            		axios
+            		.post("http://127.0.0.1:7788/api/addEmployee",{
+            			name:this.name,
+            			mailid:this.mailid,
+                        start_date:this.start_date,
+                        manager_id:this.manager_id,
+                        title:this.title,
+                        dept_id:this.dept_id,
+                        salary:this.salary,
+                        commission_pct:this.commission_pct
+            			
+            		})
+            		.then(response=>{
+            			console.log(response); 
+            			console.log(response.status);
+            			//redirect logic
+            		    if (response.status === 200) {
+            		    	alert("사원 추가 성공!");
+            		    	window.location.href = './index01.html';
+            		    }
+            		})
+            		.catch(error=>{
+	                    console.log(error);
+	                    this.errored = true;
+	                })
+	                .finally(()=>this.loading = false)
+	            }
+            }
+        })
+    </script>
+</body>
+
+</html>

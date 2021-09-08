@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<h2 align="center" style="color:blue;">ENCORE INFORMATION</h2>
+	<h3 align="center">Sign Up Form</h3>
+	<div align="center">
+		<form action="vue07_event_target.html" @submit.prevent>
+			아이디 <input type="text" v-model="input1"><br>
+			패스워드 <input type="text" v-model="input2"><br>
+			이름 <input type="text" v-model="input3"><br>
+			주소 <input type="text" v-model="input4"><br>
+			전화번호 <input type="text" v-model="input5"><br>
+			<input type="submit" value="사원추가" @click="confirm"><input type="text" @keyup.enter="confirm">키엔터
+		</form>
+	</div><br><br>
+	<div align="center">
+		<fieldset style="display:inline-block;text-align:center;width:40%;height:20px;">
+			<span style="color:red;">{{input1}} {{input2}} {{input3}} {{input4}} {{input5}}</span>
+		</fieldset>
+	</div>
+</div>
+<script>
+	new Vue({
+		el:'#app',
+		data:{
+			input1:"",input2:"",input3:"",input4:"",input5:""
+		},
+		methods:{
+			confirm(event){
+				if(this.input1==""){
+					alert("아이디를 입력하세요");
+					event.preventDefault();
+				}else if(this.input2==""){
+					alert("패스워드를 입력하세요");
+					event.preventDefault();
+				}else{
+					alert("사원추가 성공!!!")
+				}
+				
+			}
+		}
+	})
+</script>
+</body>
+</html>
