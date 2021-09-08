@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(function () {
+    	$('#ajaxBtn').click(function(){ //버튼을 클릭하면Ajax 연결되도록 로직을 작성
+    		//alert("ajax...");
+    		$.ajax({
+    			type:"post",
+    			url:"HelloAjax",
+    			data:"name=encore",
+    			
+    			//서버측에서 보내는 데이터를 받아서 응답하는 callback 함수를 호출
+    			success:function(result){//서버쪽에서 보낸 데이터를 받는 인자값을 지정해줘야한다... result
+    				//alert(result);
+    				
+    			},
+    			
+    			//에러가 발생되면 호출되는 callback 함수 연결..
+    			error:function(){
+    				alert("응답시간이 지연...Error 처리!!");
+    			},
+    			timeout:1000 //1초 동안 서버로 부터의 응답이 없으면 에러 발생(응답 대기시간을 지정)
+    		});//ajax
+    		
+    	});//click
+	});//ready
+</script>
+<style>
+
+</style>
+</head>
+<body>
+	<input type="button" value="JQueryAjax" id="ajaxBtn">
+</body>
+</html>
